@@ -53,6 +53,17 @@
     ```bash  
     docker run junesworld/application-pharmacy-recommendation -p 8080:8080
     ```
+
+## 요구사항 분석
+
+1. 주소를 문자 데이터로 입력하여 요청
+2. 주소 정보를 위도, 경도 변환 요청
+3. 주소를 위도, 경도 반환
+4. 약국 현황 데이터 Redis 조회
+5. Redis 장애인 경우 DB 조회
+6. 가장 가까운 약국 3개 추출
+7. 길안내 URL 저장(약국 길안내 정보)
+8. 추천 약국 길안내 제공
       
 ## Docker Settings
 
@@ -77,3 +88,27 @@ Folder
 
 application.yml 파일에서 설정 후 Intellij에서 환경변수 설정
 - Edit/environment/modify options/environment variables
+
+## 개발 전 API 호출
+
+KAKAO 내 Application [https://developers.kakao.com]
+
+
+Postman
+- Get
+  - https://dapi.kakao.com/v2/local/search/address.json?query=[약국 주소]
+- Headers
+  - Authorization
+  - KakaoAK [Rest API]
+
+## KAKAO 주소검색 API 구현하기
+
+application.yml
+```agsl
+kakao:
+  rest:
+    api:
+      key: ${KAKAO_REST_API_KEY}
+```
+- edit/환경변수 설정
+- api/dto, service 패키지 생성
