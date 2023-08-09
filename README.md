@@ -54,3 +54,26 @@
     docker run junesworld/application-pharmacy-recommendation -p 8080:8080
     ```
       
+## Docker Settings
+
+Folder
+- database
+  - config/mariadb.cnf : 한글 깨짐 현상 방지
+- redis
+
+
+- docker-compose-local.yml 파일 생성
+- .env 파일 생성 후 .gitignore 추가  
+- docker 실행
+  ```bash
+  docker-compose -f docker-compose-local.yml up 
+  ``` 
+- container 정상 작동 확인(새로운 터미널)
+  ```bash
+  docker ps
+  ``` 
+  
+## Springboot Database Redis Connetion
+
+application.yml 파일에서 설정 후 Intellij에서 환경변수 설정
+- Edit/environment/modify options/environment variables
