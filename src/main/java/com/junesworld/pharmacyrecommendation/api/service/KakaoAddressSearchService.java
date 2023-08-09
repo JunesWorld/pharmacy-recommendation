@@ -1,6 +1,6 @@
 package com.junesworld.pharmacyrecommendation.api.service;
 
-import com.junesworld.pharmacyrecommendation.api.dto.KakaoResponseDto;
+import com.junesworld.pharmacyrecommendation.api.dto.KakaoApiResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,7 +29,7 @@ public class KakaoAddressSearchService {
     // 응답값을 Dto에 담아서 return 해주는 DTO
     // requestAddressSearch = Method 이름
     // 주소 = 문자열
-    public KakaoResponseDto requestAddressSearch(String address) {
+    public KakaoApiResponseDto requestAddressSearch(String address) {
         // address validation check!
         if(ObjectUtils.isEmpty(address)) return null;
 
@@ -48,7 +48,7 @@ public class KakaoAddressSearchService {
         // Entity
         // Response Type
         // Body 부분만 필요
-        return restTemplate.exchange(uri, HttpMethod.GET, httpEntity, KakaoResponseDto.class).getBody();
+        return restTemplate.exchange(uri, HttpMethod.GET, httpEntity, KakaoApiResponseDto.class).getBody();
 
 
     }

@@ -112,3 +112,25 @@ kakao:
 ```
 - edit/환경변수 설정
 - api/dto, service 패키지 생성
+
+## Spock Framework란?
+
+- Groovy 언어를 이용하여 테스트 코드를 작성할 수 있는 프레임워크이며 JUnit과 비교하여 코드를 더 간결하게 작성 가능
+- Groovy 언어는 동적 타입 프로그래밍 언어로 JVM 위에서 동작하며 Java 문법과 유사
+- 테스트 메소드 이름을 문자열로 작성할 수 있으며 given, when, then 코드 블록을 명확히 구분
+
+## Spock Framework 테스트 코드 작성 순서
+
+- 테스트 클래스는 Groovy 클래스로 생성하고, Specification 클래스를 상속 받는다.
+- feature(테스트 메서드는) def를 이용하여 함수로 선언하며, 하나 이상 블록이 존재해야 한다.
+- given : 테스트에 필요한 값을 준비
+- when : 테스트할 코드를 실행
+- then : when과 함께 사용하며 예외 및 결과 값을 검증한다.
+- expect : then과 같으며 when을 필요로 하지 않기 때문에 간단한 테스트 및 where와 같이 사용된다.
+- where : 데이터가 다르고 로직이 동일한 경우 동잃나 테스트에 대한 중복 코드 제거 가능
+
+## Spock 적용
+
+build.gradle
+- plugin : groovy
+- dependencies 추가
