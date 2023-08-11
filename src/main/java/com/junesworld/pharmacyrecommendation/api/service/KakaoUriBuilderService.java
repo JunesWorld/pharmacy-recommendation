@@ -20,6 +20,7 @@ public class KakaoUriBuilderService {
         uriBuilder.queryParam("query", address);
 
         URI uri = uriBuilder.build().encode().toUri();
+        log.info("[KakaoUriBuilderService buildUriByaddressSearch] address: {}, uri: {}", address, uri);
 
         return uri;
     }

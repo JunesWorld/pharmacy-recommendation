@@ -134,3 +134,6 @@ kakao:
 build.gradle
 - plugin : groovy
 - dependencies 추가
+
+test
+- groovy directory 생성
