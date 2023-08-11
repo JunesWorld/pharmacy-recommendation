@@ -158,3 +158,15 @@ JPA 이용하여 CRUD 테스트 코드를 작성할 때 어떤 DB 환경이 좋�
 MariaDB와 Redis를 독립된 환경에서 테스트 코드 작성을 위해 TestContainers 적용
 - build.gradle에 의존성 추가
 - 테스트를 위한 test/resources/application.yml 파일 생성
+
+## Spring Data JPA 사용시 주의사항
+
+- JPA의 모든 데이터 변경은 아래와 같이 트랜잭션 안에서 실행된다!
+- 즉, 트랜잭션 밖에서 데이터 변경은 Spring Data JPA 및 영속성 컨텍스트 반영되지 않는다.
+
+## 영속성 컨텍스트(Persistence Context)
+
+- 영속성 컨텍스트는 entity를 저장하고 관리하는 저장소이며, 어플리케이션과 데이터베이스 사이에 entity를 보관하는 가상의 데이터베이스 같은 역할
+- Spring Data JPA에서 제공하는 save메소드 구현 코드를 보면 em.persist를 통해 영속성 컨텍스트에 저장
+- 이때, entity는 영속상태
+- 이미 영속성태인 경우 merge를 통해 덮어 쓴다.

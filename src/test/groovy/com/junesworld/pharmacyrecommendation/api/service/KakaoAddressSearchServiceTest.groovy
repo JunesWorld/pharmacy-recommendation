@@ -19,17 +19,17 @@ class KakaoAddressSearchServiceTest extends AbstractIntegrationContainerBaseTest
         result == null
     }
 
-//    // Test : requestAddressSearch
-//    def "주소값이 valid하면, requestAddressSearch 메소드는 정상적으로 document를 반환한다."() {
-//        given:
-//        def address = "서울 성북구 종암로 10길"
-//
-//        when:
-//        def result = kakaoAddressSearchService.requestAddressSearch(address)
-//
-//        then:
-//        result.documentList.size() > 0
-//        result.metaDto.totalCount > 0
-//        result.documentList.get(0).addressName != null
-//    }
+    // Test : requestAddressSearch
+    def "주소값이 valid하면, requestAddressSearch 메소드는 정상적으로 document를 반환한다."() {
+        given:
+        def address = "서울 성북구 종암로 10길"
+
+        when:
+        def result = kakaoAddressSearchService.requestAddressSearch(address)
+
+        then:
+        result.documentList.size() > 0
+        result.metaDto.totalCount > 0
+        result.documentList.get(0).addressName != null
+    }
 }

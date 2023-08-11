@@ -38,7 +38,7 @@ public class KakaoAddressSearchService {
         // key값 header에 담아 사용
         HttpHeaders headers = new HttpHeaders();
         // 필요한 header값은 kakao Guide 참고!
-        headers.set(HttpHeaders.AUTHORIZATION, "KakaoAK" + kakaoRestApiKey);
+        headers.set(HttpHeaders.AUTHORIZATION, "KakaoAK " + kakaoRestApiKey);
         // HttpEntity에 담아 header에 전달
         HttpEntity httpEntity = new HttpEntity<>(headers);
 
