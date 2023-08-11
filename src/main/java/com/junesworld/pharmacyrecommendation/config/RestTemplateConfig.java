@@ -1,4 +1,4 @@
-package com.junesworld.pharmacyrecommendation.api.config;
+package com.junesworld.pharmacyrecommendation.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
