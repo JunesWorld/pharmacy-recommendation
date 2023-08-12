@@ -187,3 +187,17 @@ MariaDB와 Redis를 독립된 환경에서 테스트 코드 작성을 위해 Tes
     트랜잭션이 끝나는 시점에 비교하여 변경된 부분을 쿼리로 생성하여 데이터 베이스로 반영한다.
   - 즉, 영속 상태가 아닐 경우 값을 변경해도 데이터베이스에 반영되지 않는다.
   - 트랜잭션이 없이 데이터 변경 반영이 일어나지 않는다
+
+## JPA Auditing
+
+@MappedSuperclass
+- 엔티티의 공통 매핑 정보
+
+@EntitiyListeners
+- 해당 클래스에 auditing 기능을 포함
+
+@CreateDate
+- Entity가 생성되어 저장될 때 시간이 자동 저장
+
+@LastModifieddate
+- Entity 값을 변경할 때 시간이 Update
