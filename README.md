@@ -246,8 +246,10 @@ docker ps // 실행되고 있는 container 확인
 docker exec -it [Database container ID] bash // container 환경 접속
 mysql -uroot -p // password 입력 후 접속
 show databases;
-use pharmacy-recommendation
-
-
-
 ```
+
+## 거리 계산 알고리즘 구현
+
+두 위도, 경도 사이의 거리를 계산하기 위한 알고리즘
+- [https://en.wikipedia.org/wiki/Haversine_formula]
+- Haversine formula 알고리즘은 지구를 완전한 구 라고 가정하고 계산하기 때문에 0.5% 정도 오차가 발생 가능
