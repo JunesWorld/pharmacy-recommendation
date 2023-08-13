@@ -201,3 +201,27 @@ MariaDB와 Redis를 독립된 환경에서 테스트 코드 작성을 위해 Tes
 
 @LastModifieddate
 - Entity 값을 변경할 때 시간이 Update
+
+## Spring Transactional
+
+- 스프링에서 트랜잭션 처리를 @Transactional 어노테이션을 이용하여 처리
+- @Transactional 은 스프링 AOP 기반이며, 스프링 AOP는 Proxy 기반으로 동작
+- @Transactional이 포함된 메소드가 호출될 경우, 프록시 객체를 생성함으로써 트랜잭션 생 성 및 커밋 또는 롤백 후 트랜잭션 닫는 부수적인 작업을 프록시 객체에게 위임
+- 프록시의 핵심적인 기능은 지정된 메소드가 호출(Invocation)될 때 이 메소드를 가로채어 부가 기능들을 프록시 객체에게 위임
+- 즉, 개발자가 메소드에 @Transactional만 선언하고, 비지니스 로직에 집중 가능!
+- 주의 사항
+  - 스프링 AOP 기반으로 하는 기능들(@Transactional, @Cacheable, @Async) 사용시 Self Invocation 문제로 인하여 장애가 발생할 수 있음
+  - 메소드가 호출되는 시점에 프록시 객체를 생성하고, 프록시 객체는 부가 기능(트랜잭션)을 주입해 준다.
+  - 외부에서 bar() 메소드를 실행할 때 정상적으로 프록시가 동작
+  - 하지만, @Transactional을 foo()에만 선언하고
+    외부에서 bar()를 호출하고, bar() -> foo() 호출했다면?
+  - 읽기 전용 
+    - @Transactional(readOnly = true) 스프링에서 트랜잭션을 읽기 전용으로 설정 가능
+    - 읽기 전용으로 설정하게 되면, JPA에서 스냅샷 저장 및 Dirty Checking 작업을 수행하지 않기 때문에 성능적으로 이점
+    - 따라서, Dirty Checking 불가
+  - 우선순위
+    - @Transactional은 적용 우선 순위를 가지고 있으며, 클래스 보다 메소드가 우선순위가 높다.
+    - 클래스에 @Transactioanl(readOnly=true) (읽기 전용) 으로 적용해 놓고, update가 발생하는 메소드에만 readOnly=false 우선 적용 (SimpleJpaRepository)
+- self invocation 해결 방법
+  - 트랜잭션 위치를 외부에서 호출 하는 bar() 메소드로 이동
+  - 객체의 책임을 최대한 분리하여 외부 호출 하도록 리펙토링
