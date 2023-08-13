@@ -52,4 +52,9 @@ public class PharmacyRepositoryService {
 
         entity.changePharmacyAddress(address);
     }
+
+    @Transactional(readOnly = true) // Dirty Checking X
+    public List<Pharmacy> findAll() {
+        return pharmacyRepository.findAll();
+    }
 }

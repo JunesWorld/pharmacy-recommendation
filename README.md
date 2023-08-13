@@ -225,3 +225,29 @@ MariaDB와 Redis를 독립된 환경에서 테스트 코드 작성을 위해 Tes
 - self invocation 해결 방법
   - 트랜잭션 위치를 외부에서 호출 하는 bar() 메소드로 이동
   - 객체의 책임을 최대한 분리하여 외부 호출 하도록 리펙토링
+
+## 공공기관 약국 데이터 셋업
+
+- database/init/sql파일 추가
+
+application.yml
+- jpa.hibernate.ddl-auto:validate
+
+docker-compose-local.yml
+- ./database/init:/docker-entrypoint-initdb.d
+
+```bash
+docker-compose -f docker-compose-local.yml up
+```
+
+새로운 Terminal
+```bash
+docker ps // 실행되고 있는 container 확인
+docker exec -it [Database container ID] bash // container 환경 접속
+mysql -uroot -p // password 입력 후 접속
+show databases;
+use pharmacy-recommendation
+
+
+
+```

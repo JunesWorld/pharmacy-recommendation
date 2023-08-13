@@ -19,5 +19,6 @@ services:
       - MARIADB_ROOT_PASSWORD=${SPRING_DATASOURCE_PASSWORD} # 외부에서 환경변수 주입 .env(.gitignore)
     volumes: # mariadb.cnf 참조하여 DB 초기화
       - ./database/config:/etc/mysql/conf.d
+      - ./database/init:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"

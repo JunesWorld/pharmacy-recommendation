@@ -34,7 +34,7 @@ spring:
     port: 6379
   jpa:
     hibernate:
-      ddl-auto: create # 개발환경에서만 create
+      ddl-auto: validate # 개발환경에서만 create
     show-sql: true
 
 ---
