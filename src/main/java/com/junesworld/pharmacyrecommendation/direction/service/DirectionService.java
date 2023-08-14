@@ -8,12 +8,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class DirectionService {
+
+    private static final int MAX_SEARCH_COUNT = 3; // 약국 최대 검색 갯수
+    private static final double RADIUS_KM = 10.0; // 반경 10km
 
     private final PharmacySearchService pharmacySearchService;
 
@@ -23,6 +27,8 @@ public class DirectionService {
         List<PharmacyDto> pharmacyDtos = pharmacySearchService.searchPharmacyDtoList();
 
         // 거리계산 알고리즘을 이용하여, 고객과 약국 사이의 거리를 계산하고 sort
+
+        return Collection.emptyList();
     }
 
     // Haversine formula
