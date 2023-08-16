@@ -2,10 +2,12 @@ package com.junesworld.pharmacyrecommendation.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@Builder
 @AllArgsConstructor // 전체 생성자
 @NoArgsConstructor // 빈 생성자
 public class DocumentDto {

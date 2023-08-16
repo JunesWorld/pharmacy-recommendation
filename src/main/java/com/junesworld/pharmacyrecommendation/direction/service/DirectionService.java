@@ -8,8 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -21,14 +21,36 @@ public class DirectionService {
 
     private final PharmacySearchService pharmacySearchService;
 
-    // 최대 3개 return
+
     public List<Direction> buildDirectionList(DocumentDto documentDto) { // DocumentDto = 고객의 주소정보
-        // 약국 데이터 조회
-        List<PharmacyDto> pharmacyDtos = pharmacySearchService.searchPharmacyDtoList();
+        // validation check!
+        if (Objects.isNull(documentDto)) return  Collections.emptyList();
 
-        // 거리계산 알고리즘을 이용하여, 고객과 약국 사이의 거리를 계산하고 sort
-
-        return Collection.emptyList();
+        return pharmacySearchService.searchPharmacyDtoList()
+                .stream().map(pharmacyDto ->
+                        Direction.builder()
+                                // 고객
+                                .inputAddress(documentDto.getAddressName())
+                                .inputLatitude(documentDto.getLatitude())
+                                .inputLongitude(documentDto.getLongitude())
+                                // 약국
+                                .targetPharmacyName(pharmacyDto.getPharmacyName())
+                                .targetAddress(pharmacyDto.getPharmacyAddress())
+                                .targetLatitude(pharmacyDto.getLatitude())
+                                .targetLongitude(pharmacyDto.getLongitude())
+                                // 고객과 약국 사이의 거리
+                                .distance(
+                                        calculateDistance(documentDto.getLatitude(), documentDto.getLongitude(),
+                                                pharmacyDto.getLatitude(), pharmacyDto.getLongitude())
+                                )
+                                .build())
+                // 반경 10km
+                .filter(direction -> direction.getDistance() <= RADIUS_KM)
+                // 가까운 약국 sort
+                .sorted(Comparator.comparing(Direction::getDistance))
+                // 최대 3개
+                .limit(MAX_SEARCH_COUNT)
+                .collect(Collectors.toList());
     }
 
     // Haversine formula
