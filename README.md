@@ -253,3 +253,18 @@ show databases;
 두 위도, 경도 사이의 거리를 계산하기 위한 알고리즘
 - [https://en.wikipedia.org/wiki/Haversine_formula]
 - Haversine formula 알고리즘은 지구를 완전한 구 라고 가정하고 계산하기 때문에 0.5% 정도 오차가 발생 가능
+
+## Spring Retry
+
+1번의 네트워크 호출 실패로 서비스의 비지니스 로직을 모두 실패처리하거나 fallback 처리하는 것은 몇  번 다시 호출하는 것보다 큰 리소스 낭비가 될 수 있기 때문에 사용
+- 재시도를 몇 번 실행할 것인가?
+- 재시도 하기 전에 지연시간을 얼마나 줄 것인가?
+- 재시도를 모두 실패했을 경우 어떻게 처리할 것인가?
+
+Retry with annotations
+- Spirng Retry를 활성화하려면 @EnableRetry 어노테이션을 추가해야 한다.
+- 그 후 @Retryable 어노테이션을 사용하여 메소드에 재시도 기능을 추가할 수 있다.
+- 재시도 동작을 사용자 정의하기 위해 maxAttempts 및 backoff 매개변수를 사용할 수 있다.
+- Fallback 처리르 할 수 있는 기능을 제공하는데, @Recover 어노테이션을 사용하면 된다.
+- 최대 2번 재시도를 하고 모두 실패하게 된다면 recover 메서드가 실행된다.
+  - 주의할 점은 Recover method의 반환 타입은 반드시 맞춰야 하는데, requestAddressSearch method의 반환타입을 맞춰 주었다.
