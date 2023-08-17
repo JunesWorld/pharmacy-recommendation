@@ -6,6 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Recover;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
@@ -25,6 +28,12 @@ public class KakaoAddressSearchService {
     // application.yml에 있는 key값 가져오기
     @Value("${kakao.rest.api.key}")
     private String kakaoRestApiKey;
+
+    @Retryable(
+            value = {RuntimeException.class},
+            maxAttempts = 2,
+            backoff = @Backoff(delay = 2000)
+    )
 
     // 응답값을 Dto에 담아서 return 해주는 DTO
     // requestAddressSearch = Method 이름
@@ -49,7 +58,11 @@ public class KakaoAddressSearchService {
         // Response Type
         // Body 부분만 필요
         return restTemplate.exchange(uri, HttpMethod.GET, httpEntity, KakaoApiResponseDto.class).getBody();
+    }
 
-
+    @Recover // 원래 Method의 return type 맞춰야한다.
+    public KakaoApiResponseDto recover(RuntimeException e, String address) {
+        log.error("All the retries failed. address: {}, error: {}", address, e.getMessage());
+        return null;
     }
 }
