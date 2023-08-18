@@ -2,11 +2,14 @@ package com.junesworld.pharmacyrecommendation.direction.service;
 
 import com.junesworld.pharmacyrecommendation.api.dto.DocumentDto;
 import com.junesworld.pharmacyrecommendation.direction.entity.Direction;
+import com.junesworld.pharmacyrecommendation.direction.repository.DirectionRepository;
 import com.junesworld.pharmacyrecommendation.pharmacy.dto.PharmacyDto;
 import com.junesworld.pharmacyrecommendation.pharmacy.service.PharmacySearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -20,6 +23,13 @@ public class DirectionService {
     private static final double RADIUS_KM = 10.0; // 반경 10km
 
     private final PharmacySearchService pharmacySearchService;
+    private final DirectionRepository directionRepository;
+
+    @Transactional
+    public List<Direction> saveAll(List<Direction> directionList) {
+        if(CollectionUtils.isEmpty(directionList)) return Collections.emptyList();
+        return directionRepository.saveAll(directionList);
+    }
 
 
     public List<Direction> buildDirectionList(DocumentDto documentDto) { // DocumentDto = 고객의 주소정보
