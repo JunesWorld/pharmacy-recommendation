@@ -32,7 +32,9 @@ public class PharmacyRecommendationService {
         // 가까운 약국 찾기
         DocumentDto documentDto = kakaoApiResponseDto.getDocumentList().get(0);
 
-        List<Direction> directionList = directionService.buildDirectionList(documentDto);
+//        List<Direction> directionList = directionService.buildDirectionList(documentDto);
+        // API 직접 추천
+        List<Direction> directionList = directionService.buildDirectionListByCategoryApi(documentDto);
 
         directionService.saveAll(directionList);
     }

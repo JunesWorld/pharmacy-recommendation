@@ -12,6 +12,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor // 빈 생성자
 public class DocumentDto {
     // @JsonProperty로 Mapping
+    // category 사용 -> 약국명
+    @JsonProperty("place_name")
+    private String placeName;
     // 주소
     @JsonProperty("address_name")
     private String addressName;
@@ -21,4 +24,7 @@ public class DocumentDto {
     // 경도
     @JsonProperty("x")
     private double longitude;
+
+    @JsonProperty("distance")
+    private double distance;
 }

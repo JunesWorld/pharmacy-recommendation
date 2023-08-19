@@ -1,6 +1,7 @@
 package com.junesworld.pharmacyrecommendation.direction.service;
 
 import com.junesworld.pharmacyrecommendation.api.dto.DocumentDto;
+import com.junesworld.pharmacyrecommendation.api.service.KakaoCategorySearchService;
 import com.junesworld.pharmacyrecommendation.direction.entity.Direction;
 import com.junesworld.pharmacyrecommendation.direction.repository.DirectionRepository;
 import com.junesworld.pharmacyrecommendation.pharmacy.dto.PharmacyDto;
@@ -24,13 +25,13 @@ public class DirectionService {
 
     private final PharmacySearchService pharmacySearchService;
     private final DirectionRepository directionRepository;
+    private final KakaoCategorySearchService kakaoCategorySearchService;
 
     @Transactional
     public List<Direction> saveAll(List<Direction> directionList) {
         if(CollectionUtils.isEmpty(directionList)) return Collections.emptyList();
         return directionRepository.saveAll(directionList);
     }
-
 
     public List<Direction> buildDirectionList(DocumentDto documentDto) { // DocumentDto = 고객의 주소정보
         // validation check!
@@ -59,6 +60,29 @@ public class DirectionService {
                 // 가까운 약국 sort
                 .sorted(Comparator.comparing(Direction::getDistance))
                 // 최대 3개
+                .limit(MAX_SEARCH_COUNT)
+                .collect(Collectors.toList());
+    }
+
+    // pharmacy search by category kakao api
+    public List<Direction> buildDirectionListByCategoryApi(DocumentDto inputDocumentDto) {
+        if(Objects.isNull(inputDocumentDto)) return Collections.emptyList();
+
+        // 장소 검색 api
+        return kakaoCategorySearchService
+                .requestPharmacyCategorySearch(inputDocumentDto.getLatitude(), inputDocumentDto.getLongitude(), RADIUS_KM)
+                .getDocumentList()
+                .stream().map(resultDocumentDto ->
+                        Direction.builder()
+                                .inputAddress(inputDocumentDto.getAddressName())
+                                .inputLatitude(inputDocumentDto.getLatitude())
+                                .inputLongitude(inputDocumentDto.getLongitude())
+                                .targetPharmacyName(resultDocumentDto.getPlaceName())
+                                .targetAddress(resultDocumentDto.getAddressName())
+                                .targetLatitude(resultDocumentDto.getLatitude())
+                                .targetLongitude(resultDocumentDto.getLongitude())
+                                .distance(resultDocumentDto.getDistance() * 0.001) // km 단위
+                                .build())
                 .limit(MAX_SEARCH_COUNT)
                 .collect(Collectors.toList());
     }
