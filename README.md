@@ -268,3 +268,5 @@ Retry with annotations
 - Fallback 처리르 할 수 있는 기능을 제공하는데, @Recover 어노테이션을 사용하면 된다.
 - 최대 2번 재시도를 하고 모두 실패하게 된다면 recover 메서드가 실행된다.
   - 주의할 점은 Recover method의 반환 타입은 반드시 맞춰야 하는데, requestAddressSearch method의 반환타입을 맞춰 주었다.
+
+## Handlebars를 이용한 화면 만들기
