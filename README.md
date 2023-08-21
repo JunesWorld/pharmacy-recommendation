@@ -270,3 +270,7 @@ Retry with annotations
   - 주의할 점은 Recover method의 반환 타입은 반드시 맞춰야 하는데, requestAddressSearch method의 반환타입을 맞춰 주었다.
 
 ## Handlebars를 이용한 화면 만들기
+
+view 만들기
+- 고객이 주소를 입력할 수 있는 메인화면과 주소 기준으로 가까운 약국을 검색하여 제공할 결과 화면 구성
+- Handlebars 템플릿 엔진을 이용하여 빠르게 화면 구성
