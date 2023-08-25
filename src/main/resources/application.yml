@@ -3,10 +3,8 @@ spring:
     active: local #default
     group:
       local: # local, common profile
-        - local
         - common
       prod: # prod, common profile
-        - prod
         - common
 
 ---
